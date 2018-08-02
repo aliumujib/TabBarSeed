@@ -2,13 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="55dp"
     android:gravity="center"
-    android:padding="16dp">
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/tab_icon"
+        android:layout_width="20dp"
+        android:src="@drawable/tab_search"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/tab_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textSize="10sp"
+        android:textColor="@drawable/tab_text_selector"
+        tools:text="Profile"
+        tools:ignore="SmallSp" />
 
 </LinearLayout>
