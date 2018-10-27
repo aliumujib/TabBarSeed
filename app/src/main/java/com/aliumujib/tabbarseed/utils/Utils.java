@@ -1,38 +1,24 @@
 package com.aliumujib.tabbarseed.utils;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.TextUtils;
-import android.view.View;
+
+import androidx.core.content.ContextCompat;
+
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.TreeSet;
 
 /**
  * Created by f22labs on 07/03/17.
