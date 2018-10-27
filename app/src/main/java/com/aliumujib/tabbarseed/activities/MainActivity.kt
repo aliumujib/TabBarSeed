@@ -3,10 +3,10 @@ package com.aliumujib.tabbarseed.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.transition.ChangeBounds
-import android.support.transition.TransitionManager
-import android.support.v4.app.Fragment
+import com.google.android.material.tabs.TabLayout
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
+import androidx.fragment.app.Fragment
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
