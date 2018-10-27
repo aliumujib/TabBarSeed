@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.0"
+    buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "com.aliumujib.tabbarseed"
         minSdkVersion 17
@@ -14,21 +14,37 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_URL", '\"https://api.github.com\"'
+        }
+        debug {
+            buildConfigField "String", "API_URL", '\"https://api.github.com\"'
         }
     }
+
 }
 
+ext{
+    retrofitVersion = '2.3.0'
+    retrofitGsonVersion = '2.3.0'
+    retrofitRxAdapterVersion = '2.3.0'
+    okhttp3LogginInterceptorVertion = '3.9.0'
+}
 
 dependencies {
-    compile 'androidx.legacy:legacy-support-v4:1.0.0'
-    compile "androidx.appcompat:appcompat:1.0.0"
-    compile "com.google.android.material:material:1.0.0"
-    compile "androidx.legacy:legacy-support-v4:1.0.0"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.appcompat:appcompat:1.0.0"
+    implementation "com.google.android.material:material:1.0.0"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation "androidx.constraintlayout:constraintlayout:1.1.2"
+
+    implementation "com.squareup.okhttp3:logging-interceptor:3.9.0"
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofitGsonVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitRxAdapterVersion}"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-
-

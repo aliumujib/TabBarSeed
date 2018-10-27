@@ -1,4 +1,4 @@
-package com.aliumujib.tabbarseed.fragments
+package com.aliumujib.tabbarseed.ui.base
 
 import android.content.Context
 import android.os.Bundle

@@ -1,13 +1,13 @@
-package com.aliumujib.tabbarseed.fragments
+package com.aliumujib.tabbarseed.ui
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.aliumujib.tabbarseed.R
+import com.aliumujib.tabbarseed.ui.base.BaseFragment
 
 
 class DummyFragment : BaseFragment() {

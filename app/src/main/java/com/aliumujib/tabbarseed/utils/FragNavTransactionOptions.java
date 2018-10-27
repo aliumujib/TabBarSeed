@@ -1,4 +1,4 @@
-package com.aliumujib.tabbarseed.views;
+package com.aliumujib.tabbarseed.utils;
 
 import androidx.annotation.AnimRes;
 import androidx.annotation.StyleRes;

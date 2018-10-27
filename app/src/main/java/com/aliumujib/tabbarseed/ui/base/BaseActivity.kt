@@ -1,4 +1,4 @@
-package com.aliumujib.tabbarseed.activities
+package com.aliumujib.tabbarseed.ui.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -24,8 +24,8 @@ open class BaseActivity : AppCompatActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
-
         }
+
     }
 
     fun initToolbar(toolbar: Toolbar, title: String, isBackEnabled: Boolean) {

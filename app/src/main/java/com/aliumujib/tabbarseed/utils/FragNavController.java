@@ -1,4 +1,4 @@
-package com.aliumujib.tabbarseed.views;
+package com.aliumujib.tabbarseed.utils;
 
 import android.os.Bundle;
 import androidx.annotation.CheckResult;
