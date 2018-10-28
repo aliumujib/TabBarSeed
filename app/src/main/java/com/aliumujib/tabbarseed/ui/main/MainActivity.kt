@@ -14,7 +14,7 @@ import android.widget.TextView
 import com.aliumujib.tabbarseed.R
 import com.aliumujib.tabbarseed.ui.base.BaseActivity
 import com.aliumujib.tabbarseed.ui.DummyFragment
-import com.aliumujib.tabbarseed.ui.main.fragments.RepositoryFragment
+import com.aliumujib.tabbarseed.ui.main.fragments.repolist.RepositoryFragment
 import com.aliumujib.tabbarseed.utils.FragmentHistory
 import com.aliumujib.tabbarseed.utils.IMainFragmentNavigation
 import com.aliumujib.tabbarseed.utils.Utils

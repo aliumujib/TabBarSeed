@@ -1,15 +1,15 @@
-package com.aliumujib.tabbarseed.ui.main.fragments
+package com.aliumujib.tabbarseed.ui.main.fragments.repolist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.aliumujib.retrofit_sample.model.Repository
 import com.aliumujib.tabbarseed.R
-import com.aliumujib.tabbarseed.data.contracts.IGitHubListListener
 import com.aliumujib.tabbarseed.data.contracts.IGithubRepository
 import com.aliumujib.tabbarseed.data.repositories.GithubRepository
 import com.aliumujib.tabbarseed.data.retrofit.ApiClient
@@ -22,6 +22,8 @@ class RepositoryFragment : Fragment() {
     lateinit var recyclerViewAdapter: MyRepositoryRecyclerViewAdapter
     val apiClient = ApiClient()
     lateinit var githubRepository: IGithubRepository
+    lateinit var viewModel: RepositoryViewModel
+    lateinit var viewModelFactory: RepoListViewModelModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,45 +40,38 @@ class RepositoryFragment : Fragment() {
     }
 
 
-    private var gitHubListListener = object : IGitHubListListener {
-        override fun onDataFetchSucceeded(data: List<Repository>) {
-            hideLoading()
-            recyclerViewAdapter.addItems(data)
-        }
-
-        override fun onDataFetchErrored(error: Throwable) {
-            hideLoading()
-            Toast.makeText(context!!, error.message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        githubRepository = GithubRepository(apiClient.service, gitHubListListener)
+        githubRepository = GithubRepository(apiClient.service)
         recyclerViewAdapter = MyRepositoryRecyclerViewAdapter(mutableListOf())
         // Set the adapter
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = recyclerViewAdapter
 
-        var hashMap = HashMap<String, Any>()
-        hashMap["q"] = "android+language:java+language:kotlin"
-        hashMap["sort"] = "stars"
-        hashMap["order"] = "desc"
+        viewModelFactory = RepoListViewModelModelFactory(githubRepository)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(RepositoryViewModel::class.java)
+        viewModel.getReposData()
 
-        githubRepository.fetchGithubRepositoriesMatchingFilters(hashMap)
-        showLoading()
+        observeLoading()
+
+        viewModel.data.observe(this.viewLifecycleOwner, Observer{ repos ->
+            recyclerViewAdapter.addItems(repos)
+        })
 
     }
 
-    private fun showLoading(){
-        progress_bar.visibility = View.VISIBLE
+    private fun observeLoading() {
+        viewModel.hideLoading.observe(viewLifecycleOwner , Observer{  meh ->
+            progress_bar.visibility = View.GONE
+        })
+        viewModel.showLoading.observe(viewLifecycleOwner, Observer { meh ->
+            progress_bar.visibility = View.VISIBLE
+        })
+
     }
 
-    private fun hideLoading(){
-        progress_bar.visibility = View.GONE
-    }
 
     companion object {
 

@@ -1,4 +1,4 @@
-package com.aliumujib.retrofit_sample.model
+package com.aliumujib.tabbarseed.data.model
 
 import com.google.gson.annotations.SerializedName
 

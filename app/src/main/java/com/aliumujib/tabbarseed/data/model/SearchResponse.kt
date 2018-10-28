@@ -1,6 +1,5 @@
 package com.aliumujib.tabbarseed.data.model
 
-import com.aliumujib.retrofit_sample.model.Repository
 import com.google.gson.annotations.SerializedName
 
 

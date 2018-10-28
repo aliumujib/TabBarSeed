@@ -31,6 +31,7 @@ ext{
     retrofitVersion = '2.3.0'
     retrofitGsonVersion = '2.3.0'
     retrofitRxAdapterVersion = '2.3.0'
+    lifecycle_version = "2.0.0"
     okhttp3LogginInterceptorVertion = '3.9.0'
 }
 
@@ -41,10 +42,19 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout:1.1.2"
 
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+
+    api 'androidx.legacy:legacy-support-v13:1.0.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
     implementation "com.squareup.okhttp3:logging-interceptor:3.9.0"
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofitGsonVersion}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitRxAdapterVersion}"
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
 }

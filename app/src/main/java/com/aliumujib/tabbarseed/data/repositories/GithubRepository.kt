@@ -9,17 +9,17 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class GithubRepository (var apiService: ApiService,
-                       var gitHubListListener: IGitHubListListener) : IGithubRepository {
+                       var gitHubListListener: IGitHubListListener? = null) : IGithubRepository {
 
 
     override fun fetchGithubRepositoriesMatchingFilters(hashMap: HashMap<String, Any>) {
         apiService.searchRepositories(hashMap).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>?, response: Response<SearchResponse>?) {
-                gitHubListListener.onDataFetchSucceeded(response?.body()?.items!!)
+                gitHubListListener?.onDataFetchSucceeded(response?.body()?.items!!)
             }
 
             override fun onFailure(call: Call<SearchResponse>?, t: Throwable?) {
-                gitHubListListener.onDataFetchErrored(t ?: Throwable("Error fetching data"))
+                gitHubListListener?.onDataFetchErrored(t ?: Throwable("Error fetching data"))
             }
 
         })

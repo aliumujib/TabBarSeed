@@ -1,6 +1,6 @@
 package com.aliumujib.tabbarseed.data.contracts
 
-import com.aliumujib.retrofit_sample.model.Repository
+import com.aliumujib.tabbarseed.data.model.Repository
 
 
 interface IGithubRepository {
