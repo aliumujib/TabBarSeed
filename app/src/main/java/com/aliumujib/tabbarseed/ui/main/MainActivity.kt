@@ -1,11 +1,9 @@
-package com.aliumujib.tabbarseed.activities
+package com.aliumujib.tabbarseed.ui.main
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayout
-import androidx.transition.ChangeBounds
-import androidx.transition.TransitionManager
 import androidx.fragment.app.Fragment
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,11 +12,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.aliumujib.tabbarseed.R
-import com.aliumujib.tabbarseed.fragments.DummyFragment
+import com.aliumujib.tabbarseed.ui.base.BaseActivity
+import com.aliumujib.tabbarseed.ui.DummyFragment
+import com.aliumujib.tabbarseed.ui.main.fragments.repolist.RepositoryFragment
 import com.aliumujib.tabbarseed.utils.FragmentHistory
 import com.aliumujib.tabbarseed.utils.IMainFragmentNavigation
 import com.aliumujib.tabbarseed.utils.Utils
-import com.aliumujib.tabbarseed.views.FragNavController
+import com.aliumujib.tabbarseed.utils.FragNavController
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.weird_toolbar.*
@@ -254,10 +254,8 @@ class MainActivity : BaseActivity(), FragNavController.TransactionListener, Frag
 
     override fun getRootFragment(index: Int): Fragment {
         when (index) {
-
-            FragNavController.TAB1 -> return DummyFragment()
+            FragNavController.TAB1 -> return RepositoryFragment.newInstance()
             FragNavController.TAB2 -> return DummyFragment()
-//            FragNavController.TAB5 -> return SeeAllFragment()
         }
         throw IllegalStateException("Need to send an index that we know")
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InstaLikeFragmentTransaction</string>
+    <string name="app_name">Seed</string>
 
     <array name="tab_name">
         <item>Home</item>
