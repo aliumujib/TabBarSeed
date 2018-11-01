@@ -1,47 +1,32 @@
 package com.aliumujib.tabbarseed.ui.main.fragments.repolist
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.aliumujib.tabbarseed.data.contracts.IGitHubListListener
 import com.aliumujib.tabbarseed.data.contracts.IGithubRepository
 import com.aliumujib.tabbarseed.data.model.Repository
-import com.aliumujib.tabbarseed.data.repositories.GithubRepository
-import com.aliumujib.tabbarseed.utils.call
+import com.aliumujib.tabbarseed.utils.DefaultObserver
+import com.aliumujib.tabbarseed.utils.extensions.mutableLiveDataOf
+import com.aliumujib.tabbarseed.utils.extensions.singleLiveDataOf
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class RepositoryViewModel(var githubRepository: IGithubRepository) : ViewModel() {
 
-    var hideLoading: MutableLiveData<Void> = MutableLiveData()
-    var showLoading: MutableLiveData<Void> = MutableLiveData()
+    var hideLoading = singleLiveDataOf<Void>()
+    var showLoading = singleLiveDataOf<Void>()
+    var compositeDisposable = CompositeDisposable()
+
+    var data = mutableLiveDataOf<List<Repository>>()
+    var error = mutableLiveDataOf<Throwable>()
 
 
-    var data: MutableLiveData<List<Repository>> = MutableLiveData()
-    var error: MutableLiveData<Throwable> = MutableLiveData()
-
-
-    private var gitHubListListener = object : IGitHubListListener {
-        override fun onDataFetchSucceeded(data: List<Repository>) {
-            hideViewLoading()
-            this@RepositoryViewModel.data.value = data
-        }
-
-        override fun onDataFetchErrored(error: Throwable) {
-            hideViewLoading()
-            this@RepositoryViewModel.error.value = error
-        }
+    private fun hideViewLoading() {
+        hideLoading.invoke()
     }
 
-    init {
-        (githubRepository as GithubRepository).gitHubListListener = gitHubListListener
+    private fun showViewLoading() {
+        showLoading.invoke()
     }
-
-    fun hideViewLoading() {
-        hideLoading.call()
-    }
-
-    fun showViewLoading() {
-        showLoading.call()
-    }
-
 
 
     fun getReposData() {
@@ -50,8 +35,45 @@ class RepositoryViewModel(var githubRepository: IGithubRepository) : ViewModel()
         hashMap["sort"] = "stars"
         hashMap["order"] = "desc"
 
-        githubRepository.fetchGithubRepositoriesMatchingFilters(hashMap)
-        showViewLoading()
+        compositeDisposable
+                .addAll(githubRepository.fetchGithubRepositoriesMatchingFilters(hashMap)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe {
+                            showViewLoading()
+                        }
+                        .subscribeWith(RepoObserver()))
+
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
+
+    private fun onRepoListFetchSucceeded(t: List<Repository>) {
+        hideViewLoading()
+        data.value = t
+    }
+
+    private fun onRepoListFetchFailed(exception: Throwable) {
+        hideViewLoading()
+        error.value = exception
+    }
+
+
+    inner class RepoObserver : DefaultObserver<List<Repository>>() {
+        override fun onNext(t: List<Repository>) {
+            super.onNext(t)
+            onRepoListFetchSucceeded(t)
+        }
+
+
+        override fun onError(exception: Throwable) {
+            super.onError(exception)
+            onRepoListFetchFailed(exception)
+        }
+    }
+
 
 }
