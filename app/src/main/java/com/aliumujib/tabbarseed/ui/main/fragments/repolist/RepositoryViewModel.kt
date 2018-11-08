@@ -1,16 +1,16 @@
 package com.aliumujib.tabbarseed.ui.main.fragments.repolist
 
-import androidx.lifecycle.ViewModel
 import com.aliumujib.tabbarseed.data.contracts.IGithubRepository
 import com.aliumujib.tabbarseed.data.model.RepositoryEntity
 import com.aliumujib.tabbarseed.utils.DefaultObserver
 import com.aliumujib.tabbarseed.utils.extensions.mutableLiveDataOf
 import com.aliumujib.tabbarseed.utils.extensions.singleLiveDataOf
+import com.aliumujib.tabbarseed.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class RepositoryViewModel(var githubRepository: IGithubRepository) : ViewModel() {
+class RepositoryViewModel(var githubRepository: IGithubRepository) : BaseViewModel() {
 
     var hideLoading = singleLiveDataOf<Void>()
     var showLoading = singleLiveDataOf<Void>()
@@ -28,6 +28,10 @@ class RepositoryViewModel(var githubRepository: IGithubRepository) : ViewModel()
         showLoading.invoke()
     }
 
+    override fun setUp() {
+        super.setUp()
+        getReposData()
+    }
 
     fun getReposData() {
         var hashMap = HashMap<String, Any>()

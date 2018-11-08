@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/chrome_grey"
     android:orientation="vertical">
+    <include layout="@layout/loader_view"/>
 
     <include layout="@layout/weird_toolbar" />
 
@@ -39,5 +40,6 @@
         app:tabMode="fixed"
         android:layout_height="55dp"
         android:background="@color/white" />
+
 
 </LinearLayout>

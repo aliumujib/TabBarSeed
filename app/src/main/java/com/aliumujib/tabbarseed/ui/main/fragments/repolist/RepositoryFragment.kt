@@ -14,11 +14,12 @@ import com.aliumujib.tabbarseed.data.model.RepositoryEntity
 import com.aliumujib.tabbarseed.data.repositories.GithubRepository
 import com.aliumujib.tabbarseed.data.retrofit.ApiClient
 import com.aliumujib.tabbarseed.ui.adapter.base.SingleLayoutAdapter
+import com.aliumujib.tabbarseed.ui.base.BaseMVVMFragment
 import com.aliumujib.tabbarseed.utils.common.NotNullObserver
 import kotlinx.android.synthetic.main.fragment_repository_list.*
 
 
-class RepositoryFragment : Fragment() {
+class RepositoryFragment : BaseMVVMFragment<RepositoryViewModel>() {
 
     lateinit var recyclerViewAdapter: SingleLayoutAdapter<RepositoryEntity>
     val apiClient = ApiClient()
@@ -32,46 +33,47 @@ class RepositoryFragment : Fragment() {
         arguments?.let {
 
         }
+
+        githubRepository = GithubRepository(apiClient.service)
+        recyclerViewAdapter = SingleLayoutAdapter(R.layout.repo_list_item)
+        // Set the adapter
+
+        viewModelFactory = RepoListViewModelModelFactory(githubRepository)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(RepositoryViewModel::class.java)
+        injectViewModel(viewModel)
+
+
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_repository_list, container, false)
-        return view
-    }
+
+    override val layoutResID: Int
+        get() = R.layout.fragment_repository_list
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        githubRepository = GithubRepository(apiClient.service)
-        recyclerViewAdapter = SingleLayoutAdapter(R.layout.repo_list_item)
-        // Set the adapter
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = recyclerViewAdapter
 
-        viewModelFactory = RepoListViewModelModelFactory(githubRepository)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(RepositoryViewModel::class.java)
-        viewModel.getReposData()
+
+
 
         observeLoading()
-
-        viewModel.data.observe(this.viewLifecycleOwner, NotNullObserver{ repos ->
-            recyclerViewAdapter.setData(repos)
-        })
 
     }
 
     private fun observeLoading() {
-        viewModel.hideLoading.observe(viewLifecycleOwner , Observer{  meh ->
+
+        viewModel.hideLoading.observe(viewLifecycleOwner, Observer { meh ->
             progress_bar.visibility = View.GONE
         })
+
         viewModel.showLoading.observe(viewLifecycleOwner, Observer { meh ->
             progress_bar.visibility = View.VISIBLE
         })
 
     }
-
 
     companion object {
 
