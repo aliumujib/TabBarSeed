@@ -2,9 +2,15 @@ package com.aliumujib.tabbarseed.data.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Created by aliumujib on 12/05/2018.
+ *
+ * Represents a repository on the data layer
+ */
 
-class Repository(
-        @SerializedName("id") var id: Int,
+data class RepositoryEntity(
+
+        var id: Int,
 
         @SerializedName("full_name") var repoFullName: String,
 
@@ -12,6 +18,10 @@ class Repository(
 
         @SerializedName("description") var repoDescription: String,
 
+        @SerializedName("owner") var user: UserEntity?,
+
         @SerializedName("stargazers_count") var starsCount: Int,
 
-        @SerializedName("language") var language: String?)
+        @SerializedName("language") var language: String?
+
+)

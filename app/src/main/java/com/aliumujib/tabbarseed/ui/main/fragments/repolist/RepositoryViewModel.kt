@@ -2,7 +2,7 @@ package com.aliumujib.tabbarseed.ui.main.fragments.repolist
 
 import androidx.lifecycle.ViewModel
 import com.aliumujib.tabbarseed.data.contracts.IGithubRepository
-import com.aliumujib.tabbarseed.data.model.Repository
+import com.aliumujib.tabbarseed.data.model.RepositoryEntity
 import com.aliumujib.tabbarseed.utils.DefaultObserver
 import com.aliumujib.tabbarseed.utils.extensions.mutableLiveDataOf
 import com.aliumujib.tabbarseed.utils.extensions.singleLiveDataOf
@@ -16,7 +16,7 @@ class RepositoryViewModel(var githubRepository: IGithubRepository) : ViewModel()
     var showLoading = singleLiveDataOf<Void>()
     var compositeDisposable = CompositeDisposable()
 
-    var data = mutableLiveDataOf<List<Repository>>()
+    var data = mutableLiveDataOf<List<RepositoryEntity>>()
     var error = mutableLiveDataOf<Throwable>()
 
 
@@ -51,7 +51,7 @@ class RepositoryViewModel(var githubRepository: IGithubRepository) : ViewModel()
         compositeDisposable.clear()
     }
 
-    private fun onRepoListFetchSucceeded(t: List<Repository>) {
+    private fun onRepoListFetchSucceeded(t: List<RepositoryEntity>) {
         hideViewLoading()
         data.value = t
     }
@@ -62,8 +62,8 @@ class RepositoryViewModel(var githubRepository: IGithubRepository) : ViewModel()
     }
 
 
-    inner class RepoObserver : DefaultObserver<List<Repository>>() {
-        override fun onNext(t: List<Repository>) {
+    inner class RepoObserver : DefaultObserver<List<RepositoryEntity>>() {
+        override fun onNext(t: List<RepositoryEntity>) {
             super.onNext(t)
             onRepoListFetchSucceeded(t)
         }
