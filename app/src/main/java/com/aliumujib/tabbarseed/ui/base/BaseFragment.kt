@@ -13,10 +13,6 @@ open class BaseFragment : Fragment() {
 
     lateinit var mFragmentNavigation: FragmentNavigation
 
-    override open fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
 
     override fun onAttach(context: Context) {

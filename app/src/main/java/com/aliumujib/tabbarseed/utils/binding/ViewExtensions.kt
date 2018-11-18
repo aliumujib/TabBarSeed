@@ -2,6 +2,7 @@ package com.aliumujib.tabbarseed.utils.binding
 
 
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,14 +34,14 @@ var View.gone
 
 @BindingAdapter("data")
 fun <T> setRecyclerViewProperties(recyclerView: RecyclerView, data: T?) {
-    if (recyclerView.adapter is BindableAdapter<*> && data!=null) {
+    if (recyclerView.adapter is BindableAdapter<*> && data != null) {
         (recyclerView.adapter as BindableAdapter<T>).setData(data)
     }
 }
 
 @BindingAdapter("data")
 fun <T> setViewPagerProperties(viewPager: ViewPager, data: T?) {
-    if (viewPager.adapter is BindableAdapter<*> && data!=null) {
+    if (viewPager.adapter is BindableAdapter<*> && data != null) {
         (viewPager.adapter as BindableAdapter<T>).setData(data)
     }
 }
@@ -59,5 +60,10 @@ fun setRecyclerViewOrientation(recyclerView: RecyclerView, verticalList: Boolean
     } else {
         recyclerView.layoutManager = LinearLayoutManager(recyclerView.context, RecyclerView.HORIZONTAL, false)
     }
+}
+
+@BindingAdapter("titleText")
+fun setToolbarLayout(toolbarView: Toolbar, titleText: String) {
+    toolbarView.title = titleText
 }
 

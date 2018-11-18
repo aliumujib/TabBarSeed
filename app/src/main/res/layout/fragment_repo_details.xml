@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.aliumujib.tabbarseed.ui.main.fragments.repodetails.RepoDetailViewModel" />
+
+    </data>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/repo_fullname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewmodel.repository.repoFullName}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    tools:text="Derphy/es6-cheatsheet" />
+
+                <TextView
+                    android:id="@+id/repo_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{viewmodel.repository.repoDescription}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    tools:text="Type-safe HTTP client for Android and Java by Square, Inc." />
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewmodel.repository.language}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                        tools:text="JavaScript " />
+
+                    <TextView
+                        android:id="@+id/star_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewmodel.repository.starsCount + ` star last month`}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                        tools:text="6586 stars last month" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                        tools:text="Built by" />
+
+
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/owner_image_view"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/leak_canary_icon"
+                            bind:imageUrl="@{viewmodel.repository.user.imageUrl}" />
+
+                        <TextView
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="@{viewmodel.repository.user.name}"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            tools:text="Built by" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+</layout>

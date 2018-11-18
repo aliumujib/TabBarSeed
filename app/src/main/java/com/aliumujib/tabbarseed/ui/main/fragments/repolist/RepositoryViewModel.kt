@@ -2,15 +2,17 @@ package com.aliumujib.tabbarseed.ui.main.fragments.repolist
 
 import com.aliumujib.tabbarseed.data.contracts.IGithubRepository
 import com.aliumujib.tabbarseed.data.model.RepositoryEntity
+import com.aliumujib.tabbarseed.ui.base.BaseFragment
 import com.aliumujib.tabbarseed.utils.DefaultObserver
 import com.aliumujib.tabbarseed.utils.extensions.mutableLiveDataOf
 import com.aliumujib.tabbarseed.utils.extensions.singleLiveDataOf
 import com.aliumujib.tabbarseed.ui.base.BaseViewModel
+import com.aliumujib.tabbarseed.utils.IMainFragmentNavigation
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class RepositoryViewModel(var githubRepository: IGithubRepository) : BaseViewModel() {
+class RepositoryViewModel(var githubRepository: IGithubRepository, var fragmentNavigation: IMainFragmentNavigation) : BaseViewModel() {
 
     var hideLoading = singleLiveDataOf<Void>()
     var showLoading = singleLiveDataOf<Void>()

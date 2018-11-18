@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aliumujib.tabbarseed.utils.extensions.inflater
 import kotlin.properties.Delegates.observable
 
-class SingleLayoutAdapter<T>(@LayoutRes private val resId: Int) :
+class SingleLayoutAdapter<T>(@LayoutRes private val resId: Int, var bindableItemClickListener: BindableItemClickListener<T>? = null) :
         RecyclerView.Adapter<SingleLayoutAdapter.ViewHolder<T>>(), BindableAdapter<T> {
 
-     override fun setData(data: T) {
-         if (data is List<*>) {
-             items = data as List<T>
-         }
-     }
+    override fun setData(data: T) {
+        if (data is List<*>) {
+            items = data as List<T>
+        }
+    }
 
-     fun setData(data: List<T>) {
-         items = data
+    fun setData(data: List<T>) {
+        items = data
     }
 
     var items by observable<List<T>>(listOf()) { _, oldValue, newValue ->
@@ -34,14 +34,15 @@ class SingleLayoutAdapter<T>(@LayoutRes private val resId: Int) :
 
     override fun onBindViewHolder(holder: ViewHolder<T>, position: Int) = holder.bind(items[position])
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder<T>(parent.inflate())
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder<T>(parent.inflate(), bindableItemClickListener)
 
     private fun ViewGroup.inflate() = DataBindingUtil.inflate<ViewDataBinding>(inflater, resId, this, false)
 
-    class ViewHolder<in T>(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder<T>(private val binding: ViewDataBinding, var bindableItemClickListener: BindableItemClickListener<T>?) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: T) = with(binding) {
             setVariable(BR.item, item)
+            setVariable(BR.clickListener, bindableItemClickListener)
             executePendingBindings()
         }
     }
