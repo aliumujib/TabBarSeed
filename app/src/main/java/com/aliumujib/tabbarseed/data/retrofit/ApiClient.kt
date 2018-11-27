@@ -16,23 +16,20 @@ class ApiClient constructor() {
     val service: ApiService = createService()
 
     private fun createService(): ApiService {
-        val httpClientBuilder = OkHttpClient.Builder()
+
         val logging = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
             logging.level = HttpLoggingInterceptor.Level.BODY
         } else {
             logging.level = HttpLoggingInterceptor.Level.BASIC
         }
-        httpClientBuilder.addInterceptor(logging)
-        httpClientBuilder.addInterceptor(RedirectInterceptor())
-        httpClientBuilder.followRedirects(false)
-        httpClientBuilder.followSslRedirects(false)
+
 
         val builder = Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        builder.client(httpClientBuilder.build())
+//                .addCallAdapterFactory()
+
         return builder.build().create(ApiService::class.java)
     }
 
